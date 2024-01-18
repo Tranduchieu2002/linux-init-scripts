@@ -1,0 +1,124 @@
+" ~/.config/nvim/init.vim
+
+set nocompatible            " Disable compatibility to old-time vim
+set showmatch               " Show matching parentheses
+set ignorecase              " Case insensitive search
+set mouse=v                 " Middle-click paste with mouse
+set hlsearch                " Highlight search results
+set incsearch               " Incremental search
+set tabstop=4               " Number of columns occupied by a tab
+set softtabstop=4           " See multiple spaces as tab stops
+set expandtab               " Convert tabs to white spaces
+set shiftwidth=4            " Width for auto-indents
+set autoindent              " Indent a new line the same amount as the line just typed
+set number                  " Show line numbers
+set wildmode=longest,list   " Bash-like tab completions
+set cc=80                   " Set an 80 column border for good coding style
+set fileformats=unix,dos    " Set file formats to Unix and DOS (for cross-platform compatibility)
+set encoding=utf-8          " Set encoding to UTF-8
+set laststatus=2            " Always show status line
+set ruler                   " Show the cursor position all the time
+set nowrap                  " Disable line wrapping
+set cursorline              " Highlight current cursor line
+set ttyfast                 " Speed up scrolling in Neovim
+set clipboard=unnamedplus   " Use system clipboard
+filetype plugin indent on   " Allow auto-indenting depending on file type
+syntax on                   " Enable syntax highlighting
+set mouse=a                 " Enable mouse click
+" set spell                 " Enable spell check (may need to download language package)
+" set noswapfile            " Disable creating swap file
+" set backupdir=~/.cache/nvim " Directory to store backup files
+
+" auto-install vim-plug
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  "autocmd VimEnter * PlugInstall
+  "autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+
+call plug#begin(glob('~/.config/nvim/autoload/plugged'))
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
+
+" Make sure you use single quotes
+
+" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
+" Any valid git URL is allowed
+Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+
+" Multiple Plug commands can be written in a single line using | separators
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+" Vim Airline and Themes
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" On-demand loading
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" Using a non-default branch
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+
+
+" Vim Airline and Themes
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+Plug 'fatih/vim-go', { 'tag': '*' }
+Plug 'jiangmiao/auto-pairs'
+" Plugin options
+Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+
+" Plugin outside ~/.vim/plugged with post-update hook
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+" Unmanaged plugin (manually installed and updated)
+Plug '~/my-prototype-plugin'
+Plug 'dracula/vim'
+Plug 'ryanoasis/vim-devicons'
+" plugin for spinnet
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+autocmd! User goyo.vim echom 'Goyo is now loaded!'
+" Initialize plugin system
+" - Automatically execute: `filetype plugin indent on` and `syntax enable`.
+call plug#end()
+map <C-b> :NERDTreeToggle<CR>
+map <C-i> :NERDTreeFind<CR>
+" split panel 
+nnoremap <A-h> <C-W>H
+ nnoremap <A-j> <C-W>J
+ nnoremap <A-k> <C-W>K
+ nnoremap <A-l> <C-W>L
+" move panel
+ nnoremap <C-h> <C-w>h
+ nnoremap <C-j> <C-w>j
+ nnoremap <C-k> <C-w>k
+ nnoremap <C-l> <C-w>l
+
+ " open file in a text by placing text and gf
+nnoremap gf :vert winc f<cr>
+" copies filepath to clipboard by pressing yf
+:nnoremap <silent> yf :let @+=expand('%:p')<CR>
+" copies pwd to clipboard: command yd
+:nnoremap <silent> yd :let @+=expand('%:p:h')<CR>
+" Vim jump to the last position when reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#formatter = 'default'
