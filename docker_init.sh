@@ -1,6 +1,20 @@
 #!/bin/bash
-#debug mode
-set -x  # Enable debug mode
+
+# Enable debug mode
+set -x
+
+# Check if the operating system is Debian or Ubuntu
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    if [ "$ID" != "debian" ] && [ "$ID" != "ubuntu" ]; then
+        echo "This script only supports Debian or Ubuntu."
+        exit 1
+    fi
+else
+    echo "Cannot determine the operating system. This script only supports Debian or Ubuntu."
+    exit 1
+fi
+
 # Update package list
 sudo apt update
 
@@ -35,4 +49,6 @@ docker --version
 
 # Test Docker Compose installation
 docker-compose --version
-set +x  # Disable debug mode
+
+# Disable debug mode
+set +x
