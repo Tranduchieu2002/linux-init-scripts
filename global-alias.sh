@@ -114,3 +114,46 @@ alias -g nln='nvm install-latest-npm'
 # volta
 alias -g vi='volta install'
 alias -g vl='volta list'
+
+alias ll='ls -lah'
+alias la='ls -A'
+alias l='ls -CF'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# Git aliases
+alias gs='git status'
+alias ga='git add .'
+alias gc='git commit -m'
+alias gca='git commit --amend'
+alias gp='git push'
+alias gpo='git push origin'
+alias gpl='git pull'
+alias gco='git checkout'
+alias gb='git branch'
+alias gl='git log --oneline --graph --decorate'
+
+# System/Utility
+alias cls='clear'
+alias update='sudo apt update && sudo apt upgrade -y'
+alias ports='lsof -i -P -n | grep LISTEN'
+alias myip='curl ifconfig.me'
+alias zshreload='source ~/.zshrc'
+
+# Development
+alias serve='python3 -m http.server'
+alias nrd='npm run dev'
+alias nrb='npm run build'
+alias ni='npm install'
+alias nr='npm run'
+
+# Docker
+alias dps='docker ps'
+alias dcu='docker compose up'
+alias dcd='docker compose down'
+alias dcb='docker compose build'
+
+# NVM / Node
+alias nvml='nvm list'
+alias nvmu='nvm use'
